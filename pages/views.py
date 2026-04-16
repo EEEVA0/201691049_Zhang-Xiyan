@@ -10,6 +10,11 @@ from .serializers import BookSerializer
 def book_list(request):
     if request.method == 'GET':
         books = Book.objects.all()
+
+        title = request.GET.get('title')
+        if title:
+            books = books.filter(title__icontains=title)
+
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 
