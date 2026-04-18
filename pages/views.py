@@ -3,7 +3,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.http import JsonResponse
 from django.db.models import Min, Max, Count
-from django.db.models import Count
 
 from .models import Book
 from .serializers import BookSerializer
@@ -15,6 +14,8 @@ def api_home(request):
         "available_endpoints": [
             "/books/",
             "/books/stats/",
+            "/books/recent/",
+            "/books/categories/",
             "/books/<id>/",
             "/admin/"
         ]
@@ -32,6 +33,24 @@ def book_list(request):
         category = request.GET.get('category')
         ordering = request.GET.get('ordering')
 
+        # 分页参数
+        try:
+            page = int(request.GET.get('page', 1))
+        except ValueError:
+            page = 1
+
+        try:
+            page_size = int(request.GET.get('page_size', 20))
+        except ValueError:
+            page_size = 20
+
+        if page < 1:
+            page = 1
+        if page_size < 1:
+            page_size = 20
+        if page_size > 100:
+            page_size = 100
+
         if title:
             books = books.filter(title__icontains=title)
         if author:
@@ -45,8 +64,18 @@ def book_list(request):
         if ordering in allowed_ordering:
             books = books.order_by(ordering)
 
+        total_count = books.count()
+        start = (page - 1) * page_size
+        end = start + page_size
+        books = books[start:end]
+
         serializer = BookSerializer(books, many=True)
-        return Response(serializer.data)
+        return Response({
+            "page": page,
+            "page_size": page_size,
+            "total_count": total_count,
+            "results": serializer.data
+        })
 
     elif request.method == 'POST':
         serializer = BookSerializer(data=request.data)
@@ -72,11 +101,13 @@ def book_stats(request):
         "unique_categories": unique_categories
     })
 
+
 @api_view(['GET'])
 def recent_books(request):
     books = Book.objects.exclude(published_year__isnull=True).order_by('-published_year')[:10]
     serializer = BookSerializer(books, many=True)
     return Response(serializer.data)
+
 
 @api_view(['GET'])
 def category_summary(request):
@@ -87,6 +118,7 @@ def category_summary(request):
         .order_by('-count')
     )
     return Response(list(categories))
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def book_detail(request, pk):
