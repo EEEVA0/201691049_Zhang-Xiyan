@@ -335,7 +335,7 @@ JWT authentication and review ownership rules were additionally verified through
 
 The full API documentation is available in the `docs/` folder:
 
-- [API Documentation](docs/API Documentation.pdf)
+- [API Documentation](docs/API%20Documentation.pdf)
 
 ---
 
@@ -343,7 +343,7 @@ The full API documentation is available in the `docs/` folder:
 
 The technical report covering design choices, technology justification, challenges, testing approach, limitations, and Generative AI usage is available in the `docs/` folder:
 
-- [Technical Report](docs/Technical Report.pdf)
+- [Technical Report](docs/Technical%20Report.pdf)
 
 ---
 
