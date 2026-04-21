@@ -98,12 +98,12 @@ django_coursework/
 │   ├── docs/
 │   │   ├── api_documentation.pdf
 │   │   └── technical_report.pdf
-│   ├── books_sample.csv
-│   ├── db.sqlite3
-│   ├── import_book.py
-│   ├── manage.py
-│   ├── README.md
-│   └── requirements.txt
+├── books_sample.csv
+├── db.sqlite3
+├── import_book.py
+├── manage.py
+├── README.md
+└── requirements.txt
 ```
 
 ---
@@ -120,7 +120,7 @@ The project uses a publicly available books dataset. The raw dataset was cleaned
 - Deduplicating on `(title, author, year)`
 - Sampling a subset of 100 records for coursework use
 
-The cleaned subset is stored in `books_sample.csv` and imported via `import_books.py`.
+The cleaned subset is stored in `books_sample.csv` and imported via `import_book.py`.
 
 ---
 
@@ -260,6 +260,8 @@ git clone git@github.com:EEEVA0/201691049_Zhang-Xiyan.git
 cd 201691049_Zhang-Xiyan
 ```
 
+Run all commands from the project root directory, where `manage.py` and `requirements.txt` are located.
+
 ### 2. Create and Activate a Virtual Environment
 
 **macOS / Linux:**
@@ -335,7 +337,7 @@ JWT authentication and review ownership rules were additionally verified through
 
 The full API documentation is available in the `docs/` folder:
 
-- [API Documentation](docs/API%20Documentation.pdf)
+- [API Documentation (PDF)](docs/api_documentation.pdf)
 
 ---
 
@@ -343,7 +345,7 @@ The full API documentation is available in the `docs/` folder:
 
 The technical report covering design choices, technology justification, challenges, testing approach, limitations, and Generative AI usage is available in the `docs/` folder:
 
-- [Technical Report](docs/Technical%20Report.pdf)
+- [Technical Report (PDF)](docs/technical_report.pdf)
 
 ---
 
